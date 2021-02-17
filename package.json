@@ -1,0 +1,11 @@
+{
+  "name": "canvas-firework",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Jarrett <1206905682@qq.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "parcel index.html",
+    "build": "rm -rf dist && parcel build index.html --no-minify --public-url ./"
+  }
+}
