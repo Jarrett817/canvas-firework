@@ -119,8 +119,8 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   return newRequire;
 })({"index.js":[function(require,module,exports) {
 window.onload = function () {
-  var canvas = document.getElementById("canvas");
-  var ctx = canvas.getContext("2d");
+  var canvas = document.getElementById('canvas');
+  var ctx = canvas.getContext('2d');
   var animation;
   var fireArr = [];
   var fragments = []; //animate();
@@ -166,9 +166,9 @@ window.onload = function () {
 
 
     this.boom = function () {
-      var scope = Math.round(getRandom(10, 40)); //var scope = 1;
+      var scope = Math.round(getRandom(10, 40)); //let scope = 1;
 
-      for (var i = 0; i < scope; i++) {
+      for (var _i = 0; _i < scope; _i++) {
         var angel = getRandom(0, 2 * Math.PI);
         var range = Math.round(getRandom(50, 300));
         var targetX = this.x + range * Math.cos(angel);
@@ -176,8 +176,10 @@ window.onload = function () {
         var r = Math.round(getRandom(120, 255));
         var g = Math.round(getRandom(120, 255));
         var b = Math.round(getRandom(120, 255));
-        var color = "rgb(" + r + "," + g + "," + b + ")";
-        var frag = new CreateFrag(this.x, this.y, color, targetX, targetY);
+
+        var _color = 'rgb(' + r + ',' + g + ',' + b + ')';
+
+        var frag = new CreateFrag(this.x, this.y, _color, targetX, targetY);
         this.fragArr.push(frag);
       }
     };
@@ -217,13 +219,13 @@ window.onload = function () {
     var r = Math.round(getRandom(200, 255));
     var g = Math.round(getRandom(200, 255));
     var b = Math.round(getRandom(0, 255));
-    var color = "rgb(" + r + "," + g + "," + b + ")";
+    var color = 'rgb(' + r + ',' + g + ',' + b + ')';
     var fire = new func(960 + getRandom(-300, 300), 800, color, getRandom(-5, 5), getRandom(0, 3));
     return fire;
   }
 
   function animate() {
-    ctx.fillStyle = "rgba(0,0,0,0.05)"; //产生拖尾效果
+    ctx.fillStyle = 'rgba(0,0,0,0.05)'; //产生拖尾效果
 
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -277,21 +279,20 @@ window.onload = function () {
   function getRandom(a, b) {
     return Math.random() * (b - a) + a;
   }
+
+  function move() {
+    ctx.fillStyle = 'rgba(0,0,0,0.1)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    fire.draw();
+    fire.x = fire.trackRadius * Math.cos(Math.PI / 180 * fire.angel) + fire.trackRadius + 960;
+    fire.y = fire.trackRadius * Math.sin(Math.PI / 180 * fire.angel) + 700;
+    fire.angel += 2;
+  }
+
+  window.addEventListener('click', function () {
+    new CreateFireObj(960, 700, 'blue', 100, Math.random() * 3, Math.random() * 3).animate();
+  });
 };
-
-function move() {
-  ctx.fillStyle = "rgba(0,0,0,0.1)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  fire.draw();
-  fire.x = fire.trackRadius * Math.cos(Math.PI / 180 * fire.angel) + fire.trackRadius + 960;
-  fire.y = fire.trackRadius * Math.sin(Math.PI / 180 * fire.angel) + 700;
-  fire.angel += 2;
-}
-
-var button = document.getElementById("animationTest");
-button.addEventListener("click", function () {
-  new CreateFireObj(960, 700, "blue", 100, Math.random() * 3, Math.random() * 3).animate();
-});
 },{}],"C:/Users/王俊然/AppData/Local/Yarn/Data/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -320,7 +321,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53211" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57730" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

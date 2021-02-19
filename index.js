@@ -1,12 +1,12 @@
 window.onload = function () {
-  var canvas = document.getElementById("canvas");
-  var ctx = canvas.getContext("2d");
-  var animation;
-  var fireArr = [];
-  var fragments = [];
+  const canvas = document.getElementById('canvas');
+  const ctx = canvas.getContext('2d');
+  let animation;
+  let fireArr = [];
+  let fragments = [];
   //animate();
   ////初始化烟花数：5
-  for (var i = 0; i < 5; i++) {
+  for (let i = 0; i < 5; i++) {
     fireArr.push(createRandomFire(CreateFireObj));
   }
   if (fireArr.length) {
@@ -41,24 +41,24 @@ window.onload = function () {
     };
     //烟花爆炸，产生碎片
     this.boom = function () {
-      var scope = Math.round(getRandom(10, 40));
-      //var scope = 1;
-      for (var i = 0; i < scope; i++) {
-        var angel = getRandom(0, 2 * Math.PI);
-        var range = Math.round(getRandom(50, 300));
-        var targetX = this.x + range * Math.cos(angel);
-        var targetY = this.y + range * Math.sin(angel);
-        var r = Math.round(getRandom(120, 255));
-        var g = Math.round(getRandom(120, 255));
-        var b = Math.round(getRandom(120, 255));
-        var color = "rgb(" + r + "," + g + "," + b + ")";
-        var frag = new CreateFrag(this.x, this.y, color, targetX, targetY);
+      let scope = Math.round(getRandom(10, 40));
+      //let scope = 1;
+      for (let i = 0; i < scope; i++) {
+        let angel = getRandom(0, 2 * Math.PI);
+        let range = Math.round(getRandom(50, 300));
+        let targetX = this.x + range * Math.cos(angel);
+        let targetY = this.y + range * Math.sin(angel);
+        let r = Math.round(getRandom(120, 255));
+        let g = Math.round(getRandom(120, 255));
+        let b = Math.round(getRandom(120, 255));
+        let color = 'rgb(' + r + ',' + g + ',' + b + ')';
+        let frag = new CreateFrag(this.x, this.y, color, targetX, targetY);
         this.fragArr.push(frag);
       }
     };
   }
   function CreateFrag(x, y, color, tx, ty) {
-    var that = this;
+    let that = this;
     that.x = x;
     that.y = y;
     that.ty = ty;
@@ -74,7 +74,7 @@ window.onload = function () {
     };
     that.move = function () {
       that.ty = that.ty + 0.5;
-      var dx = that.tx - that.x,
+      let dx = that.tx - that.x,
         dy = that.ty - that.y;
       that.x = Math.abs(dx) < 0.1 ? that.tx : that.x + dx * 0.01;
       that.y = Math.abs(dy) < 0.1 ? that.ty : that.y + dy * 0.01;
@@ -90,11 +90,11 @@ window.onload = function () {
     };
   }
   function createRandomFire(func) {
-    var r = Math.round(getRandom(200, 255));
-    var g = Math.round(getRandom(200, 255));
-    var b = Math.round(getRandom(0, 255));
-    var color = "rgb(" + r + "," + g + "," + b + ")";
-    var fire = new func(
+    const r = Math.round(getRandom(200, 255));
+    const g = Math.round(getRandom(200, 255));
+    const b = Math.round(getRandom(0, 255));
+    const color = 'rgb(' + r + ',' + g + ',' + b + ')';
+    const fire = new func(
       960 + getRandom(-300, 300),
       800,
       color,
@@ -105,13 +105,13 @@ window.onload = function () {
   }
 
   function animate() {
-    ctx.fillStyle = "rgba(0,0,0,0.05)"; //产生拖尾效果
+    ctx.fillStyle = 'rgba(0,0,0,0.05)'; //产生拖尾效果
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     if (fireArr.length) {
       fireArr.forEach(function (item, index) {
-        var marginWidthLeft = parseInt(getRandom(0, canvas.width / 5), 10);
-        var marginWidthRight = parseInt(getRandom(1500, canvas.width), 10);
-        var marginHeight = parseInt(getRandom(0, 300), 10);
+        let marginWidthLeft = parseInt(getRandom(0, canvas.width / 5), 10);
+        let marginWidthRight = parseInt(getRandom(1500, canvas.width), 10);
+        let marginHeight = parseInt(getRandom(0, 300), 10);
         if (
           item.x >= marginWidthRight ||
           item.x <= marginWidthLeft ||
@@ -123,7 +123,7 @@ window.onload = function () {
           item.draw();
           item.move();
         } else {
-          var removeFire = fireArr.splice(index, 1);
+          let removeFire = fireArr.splice(index, 1);
           fragments.push(removeFire);
           if (fragments.length) {
             fragments.forEach(function (item, index) {
@@ -153,27 +153,25 @@ window.onload = function () {
   function getRandom(a, b) {
     return Math.random() * (b - a) + a;
   }
+  function move() {
+    ctx.fillStyle = 'rgba(0,0,0,0.1)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    fire.draw();
+    fire.x =
+      fire.trackRadius * Math.cos((Math.PI / 180) * fire.angel) +
+      fire.trackRadius +
+      960;
+    fire.y = fire.trackRadius * Math.sin((Math.PI / 180) * fire.angel) + 700;
+    fire.angel += 2;
+  }
+  window.addEventListener('click', function () {
+    new CreateFireObj(
+      960,
+      700,
+      'blue',
+      100,
+      Math.random() * 3,
+      Math.random() * 3
+    ).animate();
+  });
 };
-
-function move() {
-  ctx.fillStyle = "rgba(0,0,0,0.1)";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  fire.draw();
-  fire.x =
-    fire.trackRadius * Math.cos((Math.PI / 180) * fire.angel) +
-    fire.trackRadius +
-    960;
-  fire.y = fire.trackRadius * Math.sin((Math.PI / 180) * fire.angel) + 700;
-  fire.angel += 2;
-}
-var button = document.getElementById("animationTest");
-button.addEventListener("click", function () {
-  new CreateFireObj(
-    960,
-    700,
-    "blue",
-    100,
-    Math.random() * 3,
-    Math.random() * 3
-  ).animate();
-});
